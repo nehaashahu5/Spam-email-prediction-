@@ -8,15 +8,10 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
 
 
-# ---------------------------------
-# Title
-# ---------------------------------
 st.title("Spam Email Detector")
 
 
-# ---------------------------------
-# Sidebar settings
-# ---------------------------------
+
 st.sidebar.header("Settings")
 
 test_size = st.sidebar.slider(
@@ -35,10 +30,6 @@ c_value = st.sidebar.slider(
     step=0.1
 )
 
-
-# ---------------------------------
-# Sample dataset
-# ---------------------------------
 emails = [
     "Win a free iPhone now",
     "Meeting at 11 am tomorrow",
@@ -54,13 +45,9 @@ emails = [
     "Exclusive deal just for you"
 ]
 
-# 1 = spam, 0 = not spam
+
 labels = [1, 0, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1]
 
-
-# ---------------------------------
-# Vectorizer
-# ---------------------------------
 vectorizer = TfidfVectorizer(
     lowercase=True,
     stop_words="english",
@@ -70,10 +57,6 @@ vectorizer = TfidfVectorizer(
 
 X = vectorizer.fit_transform(emails)
 
-
-# ---------------------------------
-# Train test split
-# ---------------------------------
 X_train, X_test, y_train, y_test = train_test_split(
     X,
     labels,
@@ -83,25 +66,18 @@ X_train, X_test, y_train, y_test = train_test_split(
 )
 
 
-# ---------------------------------
-# Model
-# ---------------------------------
+
 model = LinearSVC(C=c_value, random_state=42)
 model.fit(X_train, y_train)
 
 
-# ---------------------------------
-# Accuracy
-# ---------------------------------
 y_pred = model.predict(X_test)
 acc = accuracy_score(y_test, y_pred)
 
 st.write("Model Accuracy :", round(acc, 3))
 
 
-# ---------------------------------
-# User input
-# ---------------------------------
+
 st.subheader("Check your Email")
 
 user_msg = st.text_area("Enter Email Message")
